@@ -1,18 +1,32 @@
 <template>
   <div class="home">
-    <img src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <img class="tape" src="../assets/tape-white.jpg">
+    <h2 class="strong-text">More than a Playlist</h2>
+    <p class="body-text">Mixtape lets you build digital mixtapes to share with friends and loved ones using Spotify.</p>
+    <RoundButton title="Login" v-bind:action="login" v-bind:icon="['fab', 'spotify']" icon-color="#1ed760"/>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue';
-
+import RoundButton from "@/components/RoundButton";
 export default {
-  name: 'home',
+  name: "home",
   components: {
-    HelloWorld,
+    RoundButton
   },
+  methods: {
+    login() {
+      console.log("LOGGING IN");
+    }
+  }
 };
 </script>
+
+<style scoped lang="scss">
+.tape {
+  width: 50%;
+  height: auto;
+  margin: auto;
+  margin-top: 90px;
+}
+</style>
