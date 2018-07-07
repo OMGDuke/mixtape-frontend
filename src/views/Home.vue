@@ -10,27 +10,26 @@
 </template>
 
 <script>
+import axios from 'axios';
 import RoundButton from '@/components/RoundButton.vue';
-
 export default {
   name: 'home',
   components: {
-    RoundButton,
-  },
-  created() {
-    console.log(process.env);
+    RoundButton
   },
   methods: {
     login() {
-      const baseUrl =
-        'https://accounts.spotify.com/authorize/?response_type=code';
-      const clientId = `&client_id=${process.env.VUE_APP_SPOTIFY_CLIENT_ID}`;
-      const redirectUrl = '&redirect_uri=http://localhost:8080/login';
-      const scope = '&scope=user-read-private%20user-read-email';
-      const url = baseUrl + clientId + redirectUrl + scope;
-      window.location.href = url;
-    },
-  },
+      axios
+        .get(`${process.env.VUE_APP_API_ENDPOINT}/login`)
+        .then(res => {
+          console.log(res.request.responseURL);
+          window.location.href = res.request.responseURL;
+        })
+        .catch(error => {
+          console.log({ error });
+        });
+    }
+  }
 };
 </script>
 
