@@ -14,9 +14,18 @@ export default {
   components: {
     RoundButton
   },
+  created() {
+    console.log(process.env);
+  },
   methods: {
     login() {
-      console.log("LOGGING IN");
+      const baseUrl =
+        "https://accounts.spotify.com/authorize/?response_type=code";
+      const clientId = `&client_id=${process.env.VUE_APP_SPOTIFY_CLIENT_ID}`;
+      const redirectUrl = `&redirect_uri=http://localhost:8080/login`;
+      const scope = `&scope=user-read-private%20user-read-email`;
+      const url = baseUrl + clientId + redirectUrl + scope;
+      window.location.href = url;
     }
   }
 };
