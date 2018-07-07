@@ -1,13 +1,17 @@
 <template>
   <div class="round-button">
-    <a class="round-button__link" href="#" v-on:click="action"><font-awesome-icon v-bind:style="{ color: iconColor }" class="icon" v-if="icon" :icon="icon" /><span>{{title}}</span></a>
+    <a class="round-button__link" href="#" v-on:click="action">
+      <font-awesome-icon v-bind:style="{ color: iconColor }"
+        class="icon" v-if="icon" :icon="icon" />
+      <span>{{title}}</span>
+    </a>
   </div>
 </template>
 
 <script>
 export default {
-  name: "roundButton",
-  props: ["title", "action", "icon", "iconColor"]
+  name: 'roundButton',
+  props: ['title', 'action', 'icon', 'iconColor'],
 };
 </script>
 
