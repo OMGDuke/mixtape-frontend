@@ -12,24 +12,25 @@
 <script>
 import axios from 'axios';
 import RoundButton from '@/components/RoundButton.vue';
+
 export default {
   name: 'home',
   components: {
-    RoundButton
+    RoundButton,
   },
   methods: {
     login() {
       axios
         .get(`${process.env.VUE_APP_API_ENDPOINT}/login`)
-        .then(res => {
+        .then((res) => {
           console.log(res.request.responseURL);
           window.location.href = res.request.responseURL;
         })
-        .catch(error => {
+        .catch((error) => {
           console.log({ error });
         });
-    }
-  }
+    },
+  },
 };
 </script>
 
