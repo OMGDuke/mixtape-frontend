@@ -1,15 +1,26 @@
 <template>
   <div class="dashboard">
-    <h2>CODE: {{this.$route.query.access_token}}</h2>
+    <h1>DASHBOARD</h1>
+    {{this.$route.query}}
   </div>
 </template>
 
 <script>
+import firebase from 'firebase';
+import firebaseConfig from '../assets/firebase-config.json';
 export default {
   name: 'dashboard',
   created() {
-    console.log(this.$route.query);
-  },
+    const { firebaseToken } = this.$route.query;
+    var config = firebaseConfig;
+    firebase.initializeApp(config);
+    firebase
+      .auth()
+      .signInWithCustomToken(firebaseToken)
+      .catch(function(error) {
+        console.error(error);
+      });
+  }
 };
 </script>
 
