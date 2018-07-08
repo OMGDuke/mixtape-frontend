@@ -8,19 +8,20 @@
 <script>
 import firebase from 'firebase';
 import firebaseConfig from '../assets/firebase-config.json';
+
 export default {
   name: 'dashboard',
   created() {
     const { firebaseToken } = this.$route.query;
-    var config = firebaseConfig;
+    const config = firebaseConfig;
     firebase.initializeApp(config);
     firebase
       .auth()
       .signInWithCustomToken(firebaseToken)
-      .catch(function(error) {
+      .catch((error) => {
         console.error(error);
       });
-  }
+  },
 };
 </script>
 

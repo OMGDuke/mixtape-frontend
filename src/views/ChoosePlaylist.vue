@@ -2,7 +2,7 @@
   <div class="dashboard">
     <h1>Choose a Playlist</h1>
     <template v-for="playlist in this.playlists">
-      <p :key="playlist.id">{{playlist.name}}</p>
+      <p v-bind:key="playlist.id">{{playlist.name}}</p>
     </template>
   </div>
 </template>
@@ -18,13 +18,13 @@ export default {
     };
   },
   created() {
-    this.getPlaylists();
+    this.getPlaylists('https://api.spotify.com/v1/me/playlists');
   },
   methods: {
     getPlaylists(url) {
       axios
-        .get('https://api.spotify.com/v1/me/playlists', {
-          headers: { Authorization: 'Bearer ' + this.$route.query.access_token }
+        .get(url, {
+          headers: { Authorization: `Bearer ${this.$route.query.access_token}` }
         })
         .then(res => {
           this.playlists.push(...res.data.items);
