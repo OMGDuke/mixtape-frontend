@@ -1,8 +1,11 @@
 <template>
-  <div class="dashboard">
+  <div class="choose-playlist">
     <h1>Choose a Playlist</h1>
     <template v-for="playlist in this.playlists">
-      <p v-bind:key="playlist.id">{{playlist.name}}</p>
+      <div v-bind:key="playlist.id">
+      <img :src="playlist.images[1] ? playlist.images[1].url : null" />
+      <p >{{playlist.name}}</p>
+      </div>
     </template>
   </div>
 </template>
@@ -11,10 +14,10 @@
 import axios from 'axios';
 
 export default {
-  name: 'dashboard',
+  name: 'choosePlaylist',
   data() {
     return {
-      playlists: [],
+      playlists: []
     };
   },
   created() {
@@ -24,14 +27,20 @@ export default {
     getPlaylists(url) {
       axios
         .get(url, {
-          headers: { Authorization: `Bearer ${this.$route.query.access_token}` },
+          headers: {
+            Authorization: `Bearer ${window.sessionStorage.getItem(
+              'spotifyToken'
+            )}`
+          }
         })
-        .then((res) => {
+        .then(res => {
           this.playlists.push(...res.data.items);
-          console.log(res.data);
+          if (this.playlists.length < res.data.total) {
+            this.getPlaylists(res.data.next);
+          }
         });
-    },
-  },
+    }
+  }
 };
 </script>
 
