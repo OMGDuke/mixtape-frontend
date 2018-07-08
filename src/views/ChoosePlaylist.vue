@@ -14,7 +14,7 @@ export default {
   name: 'dashboard',
   data() {
     return {
-      playlists: []
+      playlists: [],
     };
   },
   created() {
@@ -24,14 +24,14 @@ export default {
     getPlaylists(url) {
       axios
         .get(url, {
-          headers: { Authorization: `Bearer ${this.$route.query.access_token}` }
+          headers: { Authorization: `Bearer ${this.$route.query.access_token}` },
         })
-        .then(res => {
+        .then((res) => {
           this.playlists.push(...res.data.items);
           console.log(res.data);
         });
-    }
-  }
+    },
+  },
 };
 </script>
 

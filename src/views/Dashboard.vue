@@ -18,16 +18,16 @@ export default {
       databaseURL: `https://${process.env.VUE_APP_FIREBASE_APP}.firebaseio.com`,
       projectId: process.env.VUE_APP_FIREBASE_APP,
       storageBucket: `${process.env.VUE_APP_FIREBASE_APP}.appspot.com`,
-      messagingSenderId: process.env.VUE_APP_FIREBASE_MESSAGING
+      messagingSenderId: process.env.VUE_APP_FIREBASE_MESSAGING,
     };
     firebase.initializeApp(config);
     firebase
       .auth()
       .signInWithCustomToken(firebaseToken)
-      .catch(error => {
+      .catch((error) => {
         console.error(error);
       });
-  }
+  },
 };
 </script>
 
