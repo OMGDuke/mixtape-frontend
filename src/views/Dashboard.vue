@@ -1,6 +1,6 @@
 <template>
   <div class="dashboard">
-    <h2>CODE: {{this.$route.params.access_token}}</h2>
+    <h2>CODE: {{this.$route.query.access_token}}</h2>
   </div>
 </template>
 
@@ -8,7 +8,7 @@
 export default {
   name: 'dashboard',
   created() {
-    console.log(this.$route.params);
+    console.log(this.$route.query);
   },
 };
 </script>
