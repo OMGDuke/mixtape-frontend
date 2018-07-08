@@ -16,21 +16,29 @@ import RoundButton from '@/components/RoundButton.vue';
 export default {
   name: 'home',
   components: {
-    RoundButton,
+    RoundButton
   },
   methods: {
     login() {
-      axios
-        .get(`${process.env.VUE_APP_API_ENDPOINT}/login`)
-        .then((res) => {
-          console.log(res.request.responseURL);
+      const instance = axios.create({
+        baseURL: process.env.VUE_APP_API_ENDPOINT,
+        timeout: 1000,
+        headers: {
+          credentials: 'include',
+          'Access-Control-Allow-Origin': '*'
+        }
+      });
+      instance
+        .get('/login')
+        .then(res => {
+          console.log(res);
           window.location.href = res.request.responseURL;
         })
-        .catch((error) => {
+        .catch(error => {
           console.log({ error });
         });
-    },
-  },
+    }
+  }
 };
 </script>
 
