@@ -1,32 +1,15 @@
 <template>
   <div class="playlist">
-    <img class="song__image" :src="getAlbumArt(song.track.album.images)"/>
-    <p class="song__title">{{song.track.name}}</p>
-    <p class="song__artist">{{getArtists(song.track.artists)}}</p>
+    <img class="song__image" :src="song.art"/>
+    <p class="song__title">{{song.title}}</p>
+    <p class="song__artist">{{song.artist}}</p>
   </div>
 </template>
 
 <script>
 export default {
   name: 'song',
-  props: ['song'],
-  methods: {
-    getAlbumArt(images) {
-      if (images[1]) {
-        return images[1].url;
-      } else if (images[0]) {
-        return images[0].url;
-      }
-      return null;
-    },
-    getArtists(artists) {
-      return artists
-        .map(artist => {
-          return artist.name;
-        })
-        .join(', ');
-    }
-  }
+  props: ['song']
 };
 </script>
 

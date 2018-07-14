@@ -5,9 +5,7 @@
 </template>
 
 <script>
-import firebase from 'firebase/app';
-import 'firebase/auth';
-
+import { base } from '@/firebase';
 export default {
   name: 'login',
   created() {
@@ -19,34 +17,24 @@ export default {
       if (!firebaseToken) {
         return this.$router.push({ name: 'home' });
       }
-      const config = {
-        apiKey: process.env.VUE_APP_FIREBASE_API_KEY,
-        authDomain: `${process.env.VUE_APP_FIREBASE_APP}.firebaseapp.com`,
-        databaseURL: `https://${
-          process.env.VUE_APP_FIREBASE_APP
-        }.firebaseio.com`,
-        projectId: process.env.VUE_APP_FIREBASE_APP,
-        storageBucket: `${process.env.VUE_APP_FIREBASE_APP}.appspot.com`,
-        messagingSenderId: process.env.VUE_APP_FIREBASE_MESSAGING,
-      };
-      firebase.initializeApp(config);
-      firebase
+
+      base
         .auth()
         .signInWithCustomToken(firebaseToken)
         .then(() => {
           window.sessionStorage.setItem('firebaseToken', firebaseToken);
           window.sessionStorage.setItem(
             'spotifyToken',
-            this.$route.query.access_token,
+            this.$route.query.access_token
           );
           return this.$router.push({ path: 'dashboard' });
         })
-        .catch((error) => {
+        .catch(error => {
           console.error(error);
         });
       return null;
-    },
-  },
+    }
+  }
 };
 </script>
 
