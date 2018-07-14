@@ -1,7 +1,7 @@
 <template>
   <div class="dashboard">
     <h1 class="strong-text">My Mixtapes</h1>
-           <RoundButton title="Create New" v-bind:action="createNew" />
+    <router-link to="choose-playlist"><RoundButton title="Create New" :action="()=>{}" /></router-link>
   </div>
 </template>
 
@@ -14,14 +14,14 @@ export default {
     this.getMixtapes();
   },
   components: {
-    RoundButton,
+    RoundButton
   },
   methods: {
     getMixtapes() {},
     createNew() {
-      this.$router.push({ path: 'chooseplaylist' });
-    },
-  },
+      return this.$router.push({ path: 'choosePlaylist' });
+    }
+  }
 };
 </script>
 

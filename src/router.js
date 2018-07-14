@@ -25,8 +25,8 @@ export default new Router({
       component: Dashboard,
     },
     {
-      path: '/chooseplaylist',
-      name: 'chooseplaylist',
+      path: '/choose-playlist',
+      name: 'choosePlaylist',
       component: ChoosePlaylist,
     },
   ],

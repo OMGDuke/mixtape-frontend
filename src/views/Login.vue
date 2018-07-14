@@ -27,7 +27,7 @@ export default {
         }.firebaseio.com`,
         projectId: process.env.VUE_APP_FIREBASE_APP,
         storageBucket: `${process.env.VUE_APP_FIREBASE_APP}.appspot.com`,
-        messagingSenderId: process.env.VUE_APP_FIREBASE_MESSAGING
+        messagingSenderId: process.env.VUE_APP_FIREBASE_MESSAGING,
       };
       firebase.initializeApp(config);
       firebase
@@ -37,15 +37,16 @@ export default {
           window.sessionStorage.setItem('firebaseToken', firebaseToken);
           window.sessionStorage.setItem(
             'spotifyToken',
-            this.$route.query.access_token
+            this.$route.query.access_token,
           );
           return this.$router.push({ path: 'dashboard' });
         })
-        .catch(error => {
+        .catch((error) => {
           console.error(error);
         });
-    }
-  }
+      return null;
+    },
+  },
 };
 </script>
 
