@@ -1,11 +1,6 @@
 <template>
   <div class="choose-playlist">
-    <h1 class="strong-text">Choose a Playlist</h1>
-    <div class="playlists">
-    <template v-for="playlist in this.playlists">
-      <router-link :to="{ name: 'createMixtape', params: { playlist: playlist } }" v-bind:key="playlist.id" class="playlist__link"><PlaylistPanel :playlist="playlist" /></router-link>
-    </template>
-    </div>
+   <h1>{{playlist.name}}</h1>
   </div>
 </template>
 
@@ -14,10 +9,11 @@ import axios from 'axios';
 import PlaylistPanel from '../components/PlaylistPanel';
 
 export default {
-  name: 'choosePlaylist',
+  name: 'createMixtape',
   components: {
     PlaylistPanel
   },
+  props: ['playlist'],
   data() {
     return {
       playlists: []
