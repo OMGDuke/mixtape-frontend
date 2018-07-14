@@ -4,7 +4,10 @@
     <div class="playlists">
     <template v-for="playlist in this.playlists">
       <router-link
-        :to="{ name: 'createMixtape', params: { playlistId: playlist.id, userId: playlist.owner.id } }"
+        :to="{
+          name: 'createMixtape',
+          params: { playlistId: playlist.id, userId: playlist.owner.id }
+        }"
         v-bind:key="playlist.id" class="playlist__link"
       >
         <PlaylistPanel :playlist="playlist" />
@@ -21,11 +24,11 @@ import PlaylistPanel from '../components/PlaylistPanel.vue';
 export default {
   name: 'choosePlaylist',
   components: {
-    PlaylistPanel,
+    PlaylistPanel
   },
   data() {
     return {
-      playlists: [],
+      playlists: []
     };
   },
   created() {
@@ -36,18 +39,19 @@ export default {
       axios
         .get(url, {
           headers: {
-            Authorization: `Bearer ${window.sessionStorage.getItem('spotifyToken')}`,
-          },
+            Authorization: `Bearer ${window.sessionStorage.getItem(
+              'spotifyToken'
+            )}`
+          }
         })
-        .then((res) => {
-          console.log(res.data.items[0]);
+        .then(res => {
           this.playlists.push(...res.data.items);
           if (this.playlists.length < res.data.total) {
             this.getPlaylists(res.data.next);
           }
         });
-    },
-  },
+    }
+  }
 };
 </script>
 

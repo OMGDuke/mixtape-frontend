@@ -3,14 +3,19 @@
     <label class="field__label">{{label}}
 
     </label>
-          <input class="field__input" :placeholder="placeholder" :value="value || null"/>
+          <input class="field__input" ref="input" :value="this.default" :placeholder="placeholder" @input="updateField"/>
   </div>
 </template>
 
 <script>
 export default {
   name: 'formField',
-  props: ['label', 'placeholder', 'value'],
+  props: ['label', 'placeholder', 'default'],
+  methods: {
+    updateField() {
+      this.$emit('input', this.$refs.input.value);
+    }
+  }
 };
 </script>
 

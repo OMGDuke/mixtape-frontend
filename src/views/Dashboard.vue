@@ -1,7 +1,9 @@
 <template>
   <div class="dashboard">
     <h1 class="strong-text">My Mixtapes</h1>
-    <router-link to="choose-playlist"><RoundButton title="Create New" :action="()=>{}" /></router-link>
+    <router-link to="choose-playlist">
+      <RoundButton title="Create New" :action="()=>{}" />
+    </router-link>
   </div>
 </template>
 
