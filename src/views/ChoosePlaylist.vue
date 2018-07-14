@@ -3,7 +3,12 @@
     <h1 class="strong-text">Choose a Playlist</h1>
     <div class="playlists">
     <template v-for="playlist in this.playlists">
-      <router-link :to="{ name: 'createMixtape', params: { playlist: playlist } }" v-bind:key="playlist.id" class="playlist__link"><PlaylistPanel :playlist="playlist" /></router-link>
+      <router-link
+        :to="{ name: 'createMixtape', params: { playlistId: playlist.id, userId: playlist.owner.id } }"
+        v-bind:key="playlist.id" class="playlist__link"
+      >
+        <PlaylistPanel :playlist="playlist" />
+      </router-link>
     </template>
     </div>
   </div>
@@ -11,16 +16,16 @@
 
 <script>
 import axios from 'axios';
-import PlaylistPanel from '../components/PlaylistPanel';
+import PlaylistPanel from '../components/PlaylistPanel.vue';
 
 export default {
   name: 'choosePlaylist',
   components: {
-    PlaylistPanel
+    PlaylistPanel,
   },
   data() {
     return {
-      playlists: []
+      playlists: [],
     };
   },
   created() {
@@ -31,19 +36,18 @@ export default {
       axios
         .get(url, {
           headers: {
-            Authorization: `Bearer ${window.sessionStorage.getItem(
-              'spotifyToken'
-            )}`
-          }
+            Authorization: `Bearer ${window.sessionStorage.getItem('spotifyToken')}`,
+          },
         })
-        .then(res => {
+        .then((res) => {
+          console.log(res.data.items[0]);
           this.playlists.push(...res.data.items);
           if (this.playlists.length < res.data.total) {
             this.getPlaylists(res.data.next);
           }
         });
-    }
-  }
+    },
+  },
 };
 </script>
 

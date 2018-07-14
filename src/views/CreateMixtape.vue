@@ -1,56 +1,52 @@
 <template>
   <div class="choose-playlist">
-   <h1>{{playlist.name}}</h1>
+   <h1 class="strong-text">Create Mixtape</h1>
+   <template v-if="playlist">
+    <form>
+      <FormField label="Title" :placeholder="playlist.name"/>
+      <FormField label="Description" placeholder="Enter a mixtape description" :value="playlist.description"/>
+    </form>
+  </template>
   </div>
 </template>
 
 <script>
 import axios from 'axios';
-import PlaylistPanel from '../components/PlaylistPanel';
+import FormField from '../components/FormField.vue';
 
 export default {
   name: 'createMixtape',
+  props: ['playlistId', 'userId'],
   components: {
-    PlaylistPanel
+    FormField,
   },
-  props: ['playlist'],
   data() {
     return {
-      playlists: []
+      playlist: null,
     };
   },
   created() {
-    this.getPlaylists('https://api.spotify.com/v1/me/playlists');
+    this.getPlaylist();
   },
   methods: {
-    getPlaylists(url) {
+    getPlaylist() {
+      const url = `https://api.spotify.com/v1/users/${this.userId}/playlists/${
+        this.playlistId
+      }`;
       axios
         .get(url, {
           headers: {
-            Authorization: `Bearer ${window.sessionStorage.getItem(
-              'spotifyToken'
-            )}`
-          }
+            Authorization: `Bearer ${window.sessionStorage.getItem('spotifyToken')}`,
+          },
         })
-        .then(res => {
-          this.playlists.push(...res.data.items);
-          if (this.playlists.length < res.data.total) {
-            this.getPlaylists(res.data.next);
-          }
+        .then((res) => {
+          this.playlist = res.data;
+          console.log(this.playlist.description);
         });
-    }
-  }
+    },
+  },
 };
 </script>
 
 <style scoped lang="scss">
-.playlist__link {
-  text-decoration: none;
-}
-.playlists {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  justify-items: center;
-  justify-content: space-around;
-}
 </style>

@@ -12,9 +12,14 @@ export default {
   props: ['playlist'],
   methods: {
     getAlbumArt(images) {
-      return images[1] ? images[1].url : images[0] ? images[0].url : null;
-    }
-  }
+      if (images[1]) {
+        return images[1].url;
+      } else if (images[0]) {
+        return images[0].url;
+      }
+      return null;
+    },
+  },
 };
 </script>
 

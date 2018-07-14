@@ -11,7 +11,7 @@
 <script>
 export default {
   name: 'roundButton',
-  props: ['title', 'action', 'icon', 'iconColor']
+  props: ['title', 'action', 'icon', 'iconColor'],
 };
 </script>
 

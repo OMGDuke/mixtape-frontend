@@ -14,14 +14,14 @@ export default {
     this.getMixtapes();
   },
   components: {
-    RoundButton
+    RoundButton,
   },
   methods: {
     getMixtapes() {},
     createNew() {
       return this.$router.push({ path: 'choosePlaylist' });
-    }
-  }
+    },
+  },
 };
 </script>
 
