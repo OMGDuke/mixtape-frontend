@@ -1,7 +1,6 @@
 <template>
   <div class="choose-playlist">
    <h1 class="strong-text">Create Mixtape</h1>
-   <button v-on:click="submit">CLICK</button>
    <template v-if="mixtape">
     <form>
       <FormField label="Title" v-model="mixtape.title" :default="mixtape.title"/>
@@ -14,6 +13,7 @@
             <FormField label="Reason" v-model="song.reason" placeholder="Why did you choose this song?"/>
           </div>
         </template>
+        <RoundButton title="Save" :action="submit" />
     </form>
   </template>
   </div>
@@ -24,13 +24,15 @@ import axios from 'axios';
 import { db, base } from '@/firebase';
 import FormField from '../components/FormField.vue';
 import Song from '../components/Song.vue';
+import RoundButton from '../components/RoundButton.vue';
 
 export default {
   name: 'createMixtape',
   props: ['playlistId', 'userId'],
   components: {
     FormField,
-    Song
+    Song,
+    RoundButton
   },
   firebase: () => {
     const tapes = db.ref('tapes');
@@ -46,11 +48,11 @@ export default {
   },
   methods: {
     submit() {
-      let tape = {};
       this.mixtape.uid = base.auth().currentUser.uid;
-      tape[base.auth().currentUser.uid] = this.mixtape;
-      console.log(this.mixtape.uid);
-      this.$firebaseRefs.tapes.set(tape);
+      this.$firebaseRefs.tapes.push(this.mixtape).then(res => {
+        const id = res.key;
+        return this.$router.push({ path: `/mixtape/${id}` });
+      });
     },
     getArtists(artists) {
       return artists
@@ -67,6 +69,23 @@ export default {
       }
       return null;
     },
+    generateMixtape(res) {
+      this.mixtape = {};
+      console.log(res.data);
+      this.mixtape.id = res.data.id;
+      this.mixtape.title = res.data.name;
+      this.mixtape.description = res.data.description;
+      this.mixtape.albumArt = this.getAlbumArt(res.data.images);
+      this.mixtape.songs = res.data.tracks.items.map(song => {
+        return {
+          id: song.track.id,
+          artist: this.getArtists(song.track.artists),
+          art: this.getAlbumArt(song.track.album.images),
+          title: song.track.name,
+          reason: ''
+        };
+      });
+    },
     getPlaylist() {
       const url = `https://api.spotify.com/v1/users/${this.userId}/playlists/${
         this.playlistId
@@ -79,21 +98,7 @@ export default {
             )}`
           }
         })
-        .then(res => {
-          this.mixtape = {};
-          this.mixtape.id = res.data.id;
-          this.mixtape.title = res.data.name;
-          this.mixtape.description = res.data.description;
-          this.mixtape.songs = res.data.tracks.items.map(song => {
-            return {
-              id: song.track.id,
-              artist: this.getArtists(song.track.artists),
-              art: this.getAlbumArt(song.track.album.images),
-              title: song.track.name,
-              reason: ''
-            };
-          });
-        });
+        .then(this.generateMixtape);
     }
   }
 };

@@ -5,6 +5,7 @@ import Login from './views/Login.vue';
 import Dashboard from './views/Dashboard.vue';
 import ChoosePlaylist from './views/ChoosePlaylist.vue';
 import CreateMixtape from './views/CreateMixtape.vue';
+import Mixtape from './views/Mixtape.vue';
 
 Vue.use(Router);
 
@@ -35,7 +36,11 @@ export default new Router({
       name: 'createMixtape',
       component: CreateMixtape,
       props: true,
-
+    },
+    {
+      path: '/mixtape/:id',
+      name: 'mixtape',
+      component: Mixtape,
     },
   ],
 });
