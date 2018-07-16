@@ -14,8 +14,8 @@ export default {
   methods: {
     updateField() {
       this.$emit('input', this.$refs.input.value);
-    }
-  }
+    },
+  },
 };
 </script>
 

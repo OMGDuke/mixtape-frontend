@@ -24,11 +24,11 @@ import PlaylistPanel from '../components/PlaylistPanel.vue';
 export default {
   name: 'choosePlaylist',
   components: {
-    PlaylistPanel
+    PlaylistPanel,
   },
   data() {
     return {
-      playlists: []
+      playlists: [],
     };
   },
   created() {
@@ -39,19 +39,17 @@ export default {
       axios
         .get(url, {
           headers: {
-            Authorization: `Bearer ${window.sessionStorage.getItem(
-              'spotifyToken'
-            )}`
-          }
+            Authorization: `Bearer ${window.sessionStorage.getItem('spotifyToken')}`,
+          },
         })
-        .then(res => {
+        .then((res) => {
           this.playlists.push(...res.data.items);
           if (this.playlists.length < res.data.total) {
             this.getPlaylists(res.data.next);
           }
         });
-    }
-  }
+    },
+  },
 };
 </script>
 

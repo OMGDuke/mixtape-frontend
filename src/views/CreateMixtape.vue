@@ -32,7 +32,7 @@ export default {
   components: {
     FormField,
     Song,
-    RoundButton
+    RoundButton,
   },
   firebase: () => {
     const tapes = db.ref('tapes');
@@ -40,7 +40,7 @@ export default {
   },
   data() {
     return {
-      mixtape: null
+      mixtape: null,
     };
   },
   created() {
@@ -49,16 +49,14 @@ export default {
   methods: {
     submit() {
       this.mixtape.uid = base.auth().currentUser.uid;
-      this.$firebaseRefs.tapes.push(this.mixtape).then(res => {
+      this.$firebaseRefs.tapes.push(this.mixtape).then((res) => {
         const id = res.key;
         return this.$router.push({ path: `/mixtape/${id}` });
       });
     },
     getArtists(artists) {
       return artists
-        .map(artist => {
-          return artist.name;
-        })
+        .map(artist => artist.name)
         .join(', ');
     },
     getAlbumArt(images) {
@@ -76,15 +74,13 @@ export default {
       this.mixtape.title = res.data.name;
       this.mixtape.description = res.data.description;
       this.mixtape.albumArt = this.getAlbumArt(res.data.images);
-      this.mixtape.songs = res.data.tracks.items.map(song => {
-        return {
-          id: song.track.id,
-          artist: this.getArtists(song.track.artists),
-          art: this.getAlbumArt(song.track.album.images),
-          title: song.track.name,
-          reason: ''
-        };
-      });
+      this.mixtape.songs = res.data.tracks.items.map(song => ({
+        id: song.track.id,
+        artist: this.getArtists(song.track.artists),
+        art: this.getAlbumArt(song.track.album.images),
+        title: song.track.name,
+        reason: '',
+      }));
     },
     getPlaylist() {
       const url = `https://api.spotify.com/v1/users/${this.userId}/playlists/${
@@ -93,14 +89,12 @@ export default {
       axios
         .get(url, {
           headers: {
-            Authorization: `Bearer ${window.sessionStorage.getItem(
-              'spotifyToken'
-            )}`
-          }
+            Authorization: `Bearer ${window.sessionStorage.getItem('spotifyToken')}`,
+          },
         })
         .then(this.generateMixtape);
-    }
-  }
+    },
+  },
 };
 </script>
 

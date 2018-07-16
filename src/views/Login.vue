@@ -6,6 +6,7 @@
 
 <script>
 import { base } from '@/firebase';
+
 export default {
   name: 'login',
   created() {
@@ -25,16 +26,16 @@ export default {
           window.sessionStorage.setItem('firebaseToken', firebaseToken);
           window.sessionStorage.setItem(
             'spotifyToken',
-            this.$route.query.access_token
+            this.$route.query.access_token,
           );
           return this.$router.push({ path: 'dashboard' });
         })
-        .catch(error => {
+        .catch((error) => {
           console.error(error);
         });
       return null;
-    }
-  }
+    },
+  },
 };
 </script>
 

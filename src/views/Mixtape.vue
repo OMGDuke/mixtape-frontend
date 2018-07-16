@@ -10,17 +10,18 @@
 
 <script>
 import { db } from '@/firebase';
+
 export default {
   name: 'mixtape',
   firebase() {
     const tape = {
       source: db.ref(`tapes/${this.$route.params.id}`),
       asObject: true,
-      cancelCallback: function() {},
-      readyCallback: function() {}
+      cancelCallback() {},
+      readyCallback() {},
     };
     return { tape };
-  }
+  },
 };
 </script>
 

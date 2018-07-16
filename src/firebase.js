@@ -7,7 +7,7 @@ const config = {
   authDomain: `${process.env.VUE_APP_FIREBASE_APP}.firebaseapp.com`,
   databaseURL: `https://${
     process.env.VUE_APP_FIREBASE_APP
-    }.firebaseio.com`,
+  }.firebaseio.com`,
   projectId: process.env.VUE_APP_FIREBASE_APP,
   storageBucket: `${process.env.VUE_APP_FIREBASE_APP}.appspot.com`,
   messagingSenderId: process.env.VUE_APP_FIREBASE_MESSAGING,
